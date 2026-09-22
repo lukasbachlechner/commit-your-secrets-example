@@ -60,18 +60,23 @@ and execs `node app.mjs` with the values in its environment. Nothing hits disk.
 No `secrets/dev.yaml`? It falls back to a plaintext `.env`, so a team can
 migrate one repo at a time. No key? It tells you where to put one.
 
-**03 — Give someone access**
+**03 — Add someone**
 
-They run `pnpm keygen` and send you the public key it prints (it's public — the
-team channel is fine). You paste it into `.sops.yaml`, then:
+Nobody has to ask for anything. The new person runs `pnpm keygen` and opens a
+pull request adding the public key it printed to `.sops.yaml` themselves — a
+public key is public, it protects nothing on its own.
+
+The one step they can't do is the rewrap, because they can't decrypt the file
+yet. So anyone who already can picks up the PR:
 
 ```bash
 pnpm grant
-git commit -am "give priya access to dev secrets"
+git commit -am "add priya to dev secrets"
 ```
 
-The encrypted values aren't touched — only the per-recipient wrapped copy of the
-data key in the file header. That's why onboarding is a small, reviewable diff.
+That adds their wrapped copy of the data key to the file header. The encrypted
+values themselves aren't touched — which is why access changes are small,
+reviewable diffs instead of rewritten files.
 
 ## What this doesn't fix
 
