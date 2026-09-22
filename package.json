@@ -7,5 +7,8 @@
     "dev": "./scripts/with-env.sh node app.mjs",
     "secrets": "SOPS_AGE_KEY_FILE=${SOPS_AGE_KEY_FILE:-keys/demo-key.txt} sops secrets/dev.yaml",
     "grant": "SOPS_AGE_KEY_FILE=${SOPS_AGE_KEY_FILE:-keys/demo-key.txt} sops updatekeys secrets/dev.yaml"
+  },
+  "dependencies": {
+    "zod": "^4.6.5"
   }
 }

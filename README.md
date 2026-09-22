@@ -36,7 +36,7 @@ works; see [`keys/README.md`](keys/README.md) for why that's a demo-only thing.)
 | `.sops.yaml` | Who may decrypt. Changing it is a pull request. |
 | `scripts/with-env.sh` | Decrypts into the environment and execs your command. |
 | `package.json` | The one line that changed: `"dev": "./scripts/with-env.sh node app.mjs"`. |
-| `app.mjs` | Stands in for your app. Prints what it got. |
+| `app.mjs` | Stands in for your app. Validates the env with zod, then prints what it got. |
 
 ## The three moves
 
@@ -80,3 +80,18 @@ data key in the file header. That's why onboarding is a small, reviewable diff.
 - **Dev secrets only.** Production stays in your vault.
 - **Lose the key, lose access.** Two recipients minimum, back up the keyfile.
 - **Ciphertext is forever.** Assume a future break; rotate on a schedule.
+
+## Forgot a key?
+
+`app.mjs` parses `process.env` with a zod schema before it does anything, so a
+missing or malformed value fails loudly at startup instead of halfway through a
+request:
+
+```
+Bad or missing secrets. Run `pnpm secrets` and fix secrets/dev.yaml:
+
+  STRIPE_SECRET_KEY: must be a Stripe *test* key
+```
+
+That schema replaces `.env.example` — it's the same contract about shape, except
+it's executable and it can't drift.
