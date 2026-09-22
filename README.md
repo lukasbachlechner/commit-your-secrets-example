@@ -1,12 +1,12 @@
 # Commit your secrets (at least in dev)
 
 A ~50 line example of the workflow from the talk: dev secrets live **encrypted,
-in git**, and `npm run dev` just works. Two tools, no server, no account.
+in git**, and `pnpm dev` just works. Two tools, no server, no account.
 
 ```bash
 brew install sops age
 git clone <this repo> && cd commit-your-secrets-example
-npm run dev
+pnpm dev
 ```
 
 ```
@@ -34,7 +34,7 @@ works; see [`keys/README.md`](keys/README.md) for why that's a demo-only thing.)
 **01 — Edit a secret**
 
 ```bash
-npm run secrets     # sops secrets/dev.yaml
+pnpm secrets     # sops secrets/dev.yaml
 ```
 
 Your editor opens on plaintext. Save, and `git diff` shows one changed line of
@@ -43,7 +43,7 @@ ciphertext.
 **02 — Run the app**
 
 ```bash
-npm run dev
+pnpm dev
 ```
 
 The wrapper finds `secrets/dev.yaml`, decrypts it in memory with your age key,

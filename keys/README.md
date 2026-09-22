@@ -1,7 +1,7 @@
 # This private key is published on purpose
 
 `demo-key.txt` is the age private key that decrypts `secrets/dev.yaml`. It is
-committed so that cloning this repo and running `npm run dev` works with no
+committed so that cloning this repo and running `pnpm dev` works with no
 setup at all.
 
 In a real repo it never gets committed. Each person generates their own:
