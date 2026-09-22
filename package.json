@@ -4,6 +4,6 @@
   "type": "module",
   "scripts": {
     "dev": "./scripts/with-env.sh node app.mjs",
-    "secrets": "sops secrets/dev.yaml"
+    "secrets": "SOPS_AGE_KEY_FILE=${SOPS_AGE_KEY_FILE:-keys/demo-key.txt} sops secrets/dev.yaml"
   }
 }
