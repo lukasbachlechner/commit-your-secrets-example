@@ -1,0 +1,5 @@
+# Who may decrypt what. Adding a teammate = adding their public key here,
+# then `sops updatekeys secrets/dev.yaml`. Both changes land in a pull request.
+creation_rules:
+  - path_regex: secrets/.*\.yaml$
+    age: age193jh4rf8p4ttg2c4rzrg3gtj6qwvt98rj52v9z45g04zz95s25hshml6p8

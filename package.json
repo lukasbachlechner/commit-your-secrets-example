@@ -1,0 +1,9 @@
+{
+  "name": "commit-your-secrets-example",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "./scripts/with-env.sh node app.mjs",
+    "secrets": "sops secrets/dev.yaml"
+  }
+}
