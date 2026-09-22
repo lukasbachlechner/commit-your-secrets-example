@@ -25,7 +25,7 @@ fi
 if ! out=$(sops decrypt --output-type dotenv "$SECRETS" 2>&1); then
   echo "Could not decrypt $SECRETS:" >&2
   echo "$out" >&2
-  echo "Your age key belongs in ~/.config/sops/age/keys.txt (age-keygen -o that path)," >&2
+  echo "Run \"pnpm keygen\" to make an age key," >&2
   echo "and its public half in .sops.yaml — ask a teammate to add it." >&2
   exit 1
 fi
