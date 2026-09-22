@@ -7,7 +7,7 @@ setup at all.
 In a real repo it never gets committed. Each person generates their own:
 
 ```bash
-age-keygen -o ~/.config/sops/age/keys.txt
+pnpm keygen
 ```
 
 ...and the *public* half goes into `.sops.yaml` via a pull request.

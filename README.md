@@ -4,8 +4,8 @@ A ~50 line example of the workflow from the talk: dev secrets live **encrypted,
 in git**, and `pnpm dev` just works. Two tools, no server, no account.
 
 ```bash
-brew install sops age
 git clone <this repo> && cd commit-your-secrets-example
+pnpm tools     # brew install sops age
 pnpm dev
 ```
 
@@ -18,6 +18,16 @@ DATABASE_URL: postgres…
 Those values came out of [`secrets/dev.yaml`](secrets/dev.yaml) — go read it,
 it's committed. (This repo ships its own age key so the clone-and-run above
 works; see [`keys/README.md`](keys/README.md) for why that's a demo-only thing.)
+
+## Every command is a pnpm script
+
+| Command | What it does |
+| --- | --- |
+| `pnpm tools` | `brew install sops age` |
+| `pnpm keygen` | Makes your age keypair in `~/.config/sops/age/keys.txt` and prints the public half |
+| `pnpm dev` | Runs the app with the decrypted values in its environment |
+| `pnpm secrets` | Opens `secrets/dev.yaml` in your editor, as plaintext |
+| `pnpm grant` | Rewraps the file for whoever is listed in `.sops.yaml` |
 
 ## What's in here
 
@@ -34,7 +44,7 @@ works; see [`keys/README.md`](keys/README.md) for why that's a demo-only thing.)
 **01 — Edit a secret**
 
 ```bash
-pnpm secrets     # sops secrets/dev.yaml
+pnpm secrets
 ```
 
 Your editor opens on plaintext. Save, and `git diff` shows one changed line of
@@ -53,16 +63,11 @@ migrate one repo at a time. No key? It tells you where to put one.
 
 **03 — Give someone access**
 
-They send you their public key (it's public — the team channel is fine):
+They run `pnpm keygen` and send you the public key it prints (it's public — the
+team channel is fine). You paste it into `.sops.yaml`, then:
 
 ```bash
-age-keygen -o ~/.config/sops/age/keys.txt   # on their machine
-```
-
-You add it to `.sops.yaml`, rewrap, and commit both files:
-
-```bash
-sops updatekeys secrets/dev.yaml
+pnpm grant
 git commit -am "give priya access to dev secrets"
 ```
 
