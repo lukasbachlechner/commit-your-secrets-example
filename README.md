@@ -4,8 +4,8 @@ A ~50 line example of the workflow from the talk: dev secrets live **encrypted,
 in git**, and `pnpm dev` just works. Two tools, no server, no account.
 
 ```bash
+brew install sops age
 git clone <this repo> && cd commit-your-secrets-example
-pnpm tools     # brew install sops age
 pnpm dev
 ```
 
@@ -23,7 +23,6 @@ works; see [`keys/README.md`](keys/README.md) for why that's a demo-only thing.)
 
 | Command | What it does |
 | --- | --- |
-| `pnpm tools` | `brew install sops age` |
 | `pnpm keygen` | Makes your age keypair in `~/.config/sops/age/keys.txt` and prints the public half |
 | `pnpm dev` | Runs the app with the decrypted values in its environment |
 | `pnpm secrets` | Opens `secrets/dev.yaml` in your editor, as plaintext |
